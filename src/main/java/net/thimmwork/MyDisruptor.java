@@ -6,8 +6,8 @@ import com.lmax.disruptor.dsl.ProducerType;
 
 import java.util.concurrent.Executors;
 
-public class MyDisruptor extends Disruptor<EventWrapper> {
-    public MyDisruptor() {
+class MyDisruptor extends Disruptor<EventWrapper> {
+    MyDisruptor() {
         super(EventWrapper::new, 1024, Executors.defaultThreadFactory(), ProducerType.SINGLE, new SleepingWaitStrategy());
         init();
     }

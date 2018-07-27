@@ -11,7 +11,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
     </properties>
 
     <build>
@@ -24,7 +25,8 @@
                     <sourceFiles>
                         <directory>${basedir}</directory>
                         <includes>
-                            <include>output.txt</include>
+                            <include>dynamic.txt</include>
+                            <include>static.txt</include>
                         </includes>
                     </sourceFiles>
                 </configuration>
@@ -35,6 +37,26 @@
                         <version>1.2018.8</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -62,6 +84,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>25.1-jre</version>
         </dependency>
     </dependencies>
 </project>

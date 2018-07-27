@@ -11,5 +11,5 @@ Process2 --> === S2 ===
 partition EventHandlerGroup3 {
   === S2 === --> HandleJoin
 }
-Handle1 --> HandleJoin
+Handle1 --> === S2 ===
 @enduml
