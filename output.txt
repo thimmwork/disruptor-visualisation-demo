@@ -1,0 +1,15 @@
+@startuml
+(*) --> === S1 ===
+partition EventHandlerGroup1 {
+  === S1 === --> Handle1
+}
+partition EventHandlerGroup2 {
+  === S1 === --> Process1
+  Process1 --> Process2
+}
+Process2 --> === S2 ===
+partition EventHandlerGroup3 {
+  === S2 === --> HandleJoin
+}
+Handle1 --> HandleJoin
+@enduml
