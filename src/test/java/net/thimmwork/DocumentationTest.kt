@@ -16,15 +16,27 @@ class DocumentationTest {
         val process2 = "Process2"
         val handleJoin = "HandleJoin"
 
-        val diagram = Diagram(arrayOf(
-                Dependency(startEnd, s1),
-                Partition("EventHandlerGroup1", Dependency(s1, handle1)),
-                Partition("EventHandlerGroup2", Dependency(s1, process1), Dependency(process1, process2)),
-                Dependency(process2, s2),
-                Partition("EventHandlerGroup3", Dependency(s2, handleJoin)),
-                Dependency(handle1, s2),
-                Dependency(handleJoin, startEnd)
+        val diagram = disruptor(arrayOf(
+                arrow(startEnd, s1),
+                eventHandlerGroup("EventHandlerGroup1", arrow(s1, handle1)),
+                eventHandlerGroup("EventHandlerGroup2", arrow(s1, process1), arrow(process1, process2)),
+                arrow(process2, s2),
+                eventHandlerGroup("EventHandlerGroup3", arrow(s2, handleJoin)),
+                arrow(handle1, s2),
+                arrow(handleJoin, startEnd)
         ))
         Files.write(File("dynamic-kt.txt").toPath(), diagram.lines, Charset.forName("UTF-8"))
     }
 }
+
+//DSL
+
+fun disruptor(elements: Array<Any>): Diagram {
+    return Diagram(elements)
+}
+
+fun eventHandlerGroup(name: String, vararg contents: Any) : Partition {
+    return Partition(name, *contents)
+}
+
+fun arrow(src: String, tgt: String) = Dependency(src, tgt)
