@@ -15,18 +15,16 @@ class DocumentationTest {
         val process1 = "Process1"
         val process2 = "Process2"
         val handleJoin = "HandleJoin"
-        val line1 = Dependency(startEnd, s1)
-        val line2 = Dependency(process2, s2)
-        val line3 = Dependency(handle1, s2)
-        val line4 = Dependency(handleJoin, startEnd)
 
-        val eventHandlerGroup1 = Partition("EventHandlerGroup1", Dependency(s1, handle1))
-        val eventHandlerGroup2 = Partition("EventHandlerGroup2",
-                Dependency(s1, process1),
-                Dependency(process1, process2)
-        )
-        val eventHandlerGroup3 = Partition("EventHandlerGroup3", Dependency(s2, handleJoin))
-        val diagram = Diagram(arrayOf(line1, eventHandlerGroup1, eventHandlerGroup2, line2, eventHandlerGroup3, line3, line4))
+        val diagram = Diagram(arrayOf(
+                Dependency(startEnd, s1),
+                Partition("EventHandlerGroup1", Dependency(s1, handle1)),
+                Partition("EventHandlerGroup2", Dependency(s1, process1), Dependency(process1, process2)),
+                Dependency(process2, s2),
+                Partition("EventHandlerGroup3", Dependency(s2, handleJoin)),
+                Dependency(handle1, s2),
+                Dependency(handleJoin, startEnd)
+        ))
         Files.write(File("dynamic-kt.txt").toPath(), diagram.lines, Charset.forName("UTF-8"))
     }
 }
