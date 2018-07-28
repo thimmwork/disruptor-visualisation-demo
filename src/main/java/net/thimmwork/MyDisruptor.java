@@ -13,9 +13,10 @@ class MyDisruptor extends Disruptor<EventWrapper> {
     }
 
     private void init() {
-        handleEventsWith(new Handle1()).and(
-                handleEventsWith(new Process1(), new Process2())
-        ).then(new HandleJoin())
+        handleEventsWith(new Handle1())
+                .and(
+                        handleEventsWith(new Process1(), new Process2())
+                ).then(new HandleJoin())
         .then(new Clean());
     }
 
